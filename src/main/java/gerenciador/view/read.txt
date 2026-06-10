@@ -1,1 +1,47 @@
 Parte onde ficará o front
+
+//
+
+func: listarProcessosDoUsuario(String usuarioDesejado) 
+
+retorna (List<>) uma lista de objetos Processo  
+
+//
+
+func: bloquear Processo do pid selecionado(long pid)
+
+o processo do pid selecionado é bloqueado
+
+//
+
+func: continuarProcesso(long pid)
+
+desbloquear o Pid bloqueado anteriormente 
+
+//
+
+func: finalizarProcesso(long pid)
+
+o processo do pid selecionado é finalizado
+
+//
+
+func: reiniciarProcesso(long pid)
+
+O identificador do processo que receberá o comando de reiniciar.
+
+//
+
+func alterarPrioridade(long pid, int novoNice)
+
+Função acionada quando o usuário quiser mudar a prioridade de algo que já está em execução.
+
+int novoNice == valor que vamos atribuir a prioridade,  no Linux só pode ser do -20 ate 19
+
+//
+
+func: executarNovoProcesso(String comando)
+e
+func: executarNovoProcessoComPrioridade(String comando, int nice)
+
+funções onde haverá um campo de texto para o usuário digitar o nome de um programa para iniciar.
