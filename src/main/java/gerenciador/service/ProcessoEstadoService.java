@@ -23,4 +23,34 @@ public class ProcessoEstadoService {
     public static void reiniciarProcesso(long pid) throws Exception {
         ComandoExecutor.executar("kill -HUP " + pid);
     }
+
+    //A partir daqui, as funções finalizam, bloqueam, desbloqueam e reiniciam o grupo de processos que pertecem ao app
+
+
+    // Tópico C: Finalizar Árvore de Processos (App completo)
+    // Irá finalizar todos processos daquele app
+    public static void finalizarArvoreDeProcessos(long pid) throws Exception {
+        // O comando 'ps -o pgid= -p PID' busca o ID do grupo do processo.
+        // O sinal negativo antes do PGID (ex: kill -15 -PGID) avisa o Linux para matar o grupo todo.
+        String comandoShell = "sh -c \"kill -15 -$(ps -o pgid= -p " + pid + " | tr -d ' ')\"";
+        ComandoExecutor.executar(comandoShell);
+}
+
+// Bloquear toda a árvore
+    public static void bloquearArvoreDeProcessos(long pid) throws Exception {
+        String comandoShell = "sh -c \"kill -STOP -$(ps -o pgid= -p " + pid + " | tr -d ' ')\"";
+        ComandoExecutor.executar(comandoShell);
+    }
+
+    // Continuar toda a árvore
+    public static void continuarArvoreDeProcessos(long pid) throws Exception {
+        String comandoShell = "sh -c \"kill -CONT -$(ps -o pgid= -p " + pid + " | tr -d ' ')\"";
+        ComandoExecutor.executar(comandoShell);
+    }
+
+    // Reiniciar toda a árvore
+    public static void reiniciarArvoreDeProcessos(long pid) throws Exception {
+        String comandoShell = "sh -c \"kill -HUP -$(ps -o pgid= -p " + pid + " | tr -d ' ')\"";
+        ComandoExecutor.executar(comandoShell);
+    }
 }
