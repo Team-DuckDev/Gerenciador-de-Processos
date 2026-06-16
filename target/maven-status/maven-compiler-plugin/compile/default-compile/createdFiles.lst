@@ -1,2 +1,7 @@
-gerenciador\service\ProcessoService.class
+gerenciador\util\ComandoExecutor.class
+gerenciador\service\ProcessoPrioridadeService.class
+gerenciador\service\ProcessoExecucaoService.class
+gerenciador\service\ProcessoEstadoService.class
 gerenciador\model\Processo.class
+gerenciador\service\ProcessoConsultaService.class
+gerenciador\Main.class
