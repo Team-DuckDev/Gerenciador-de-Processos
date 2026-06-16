@@ -71,4 +71,12 @@ public class Processo {
     public void setCommand(String command) {
         this.command = command;
     }
+
+    public String getPrioridadeDescricao() {
+        if (nice < -11) return "Muito alta";
+        else if (nice < -1) return "Alta";
+        else if (nice == 0) return "Normal";
+        else if (nice < 10) return "Baixa";
+        return "Muito baixa";
+        }
 }
