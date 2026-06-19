@@ -73,10 +73,10 @@ public class Processo {
     }
 
     public String getPrioridadeDescricao() {
-        if (nice < -11) return "Muito alta";
-        else if (nice < -1) return "Alta";
+        if (nice <= -10) return "Muito alta";
+        else if (nice <= -1) return "Alta";
         else if (nice == 0) return "Normal";
-        else if (nice < 10) return "Baixa";
+        else if (nice <= 6) return "Baixa";
         return "Muito baixa";
         }
 }
