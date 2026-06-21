@@ -5,13 +5,13 @@ import java.util.List;
 import gerenciador.model.Processo;
 import gerenciador.service.ProcessoConsultaService;
 import gerenciador.service.ProcessoEstadoService;
-import gerenciador.service.ProcessoPrioridadeService;
 import gerenciador.service.ProcessoExecucaoService;
-
+import gerenciador.service.ProcessoPrioridadeService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,23 +21,20 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.collections.FXCollections;
-
 
 public class Main extends Application {
 
     ProcessoConsultaService consulta = new ProcessoConsultaService();
-    //String usuario = System.getProperty("user.name");
-    String usuario = "matheus-soares";
+    String usuario = System.getProperty("user.name");
 
     @Override
     public void start(Stage stage) {
@@ -53,7 +50,7 @@ public class Main extends Application {
         TableView<Processo> tabela = createTable(processos);
 
         Timeline timeline = new Timeline(
-            new KeyFrame(Duration.seconds(1), event -> atualizarTabela(tabela))
+                new KeyFrame(Duration.seconds(1), event -> atualizarTabela(tabela))
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -63,9 +60,9 @@ public class Main extends Application {
 
         ComboBox<String> prioridadeCombo = new ComboBox<>();
         prioridadeCombo.getItems().addAll(
-            "Muito baixa",
-            "Baixa",
-            "Normal"
+                "Muito baixa",
+                "Baixa",
+                "Normal"
         );
         prioridadeCombo.setValue("Normal");
 
@@ -104,9 +101,9 @@ public class Main extends Application {
 
         HBox painelExecucao = new HBox(10);
         painelExecucao.getChildren().addAll(
-            comandoField,
-            prioridadeCombo,
-            executarButton
+                comandoField,
+                prioridadeCombo,
+                executarButton
         );
 
         VBox root = new VBox(15);
@@ -166,9 +163,9 @@ public class Main extends Application {
 
         TableColumn<Processo, String> prioridadeCol = new TableColumn<>("Prioridade");
         prioridadeCol.setCellValueFactory(
-            cellData -> new SimpleStringProperty(
-                cellData.getValue().getPrioridadeDescricao()
-            )
+                cellData -> new SimpleStringProperty(
+                        cellData.getValue().getPrioridadeDescricao()
+                )
         );
 
         tabela.getColumns().addAll(pidCol, commandCol, statusCol, timeCol, userCol, prioridadeCol);
@@ -183,69 +180,69 @@ public class Main extends Application {
     public TableRow<Processo> creaTableRow() {
         TableRow<Processo> row = new TableRow<>();
 
-            ContextMenu contextMenu = new ContextMenu();
+        ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem finalizarProcesso = new MenuItem("Finalizar Processo");
-            MenuItem bloquearProcesso = new MenuItem("Bloquear Processo");
-            MenuItem reiniciarProcesso = new MenuItem("Reiniciar Processo");
-            MenuItem continuarProcesso = new MenuItem("Continuar processo");
+        MenuItem finalizarProcesso = new MenuItem("Finalizar Processo");
+        MenuItem bloquearProcesso = new MenuItem("Bloquear Processo");
+        MenuItem reiniciarProcesso = new MenuItem("Reiniciar Processo");
+        MenuItem continuarProcesso = new MenuItem("Continuar processo");
 
-            finalizarProcesso.setOnAction(event -> {
-                Processo processo = row.getItem();
-                if (processo != null) {
-                    try {
-                        ProcessoEstadoService.finalizarProcesso(processo.getPid());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        finalizarProcesso.setOnAction(event -> {
+            Processo processo = row.getItem();
+            if (processo != null) {
+                try {
+                    ProcessoEstadoService.finalizarProcesso(processo.getPid());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
 
-            bloquearProcesso.setOnAction(event -> {
-                Processo processo = row.getItem();
-                if (processo != null) {
-                    try {
-                        ProcessoEstadoService.bloquearProcesso(processo.getPid());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        bloquearProcesso.setOnAction(event -> {
+            Processo processo = row.getItem();
+            if (processo != null) {
+                try {
+                    ProcessoEstadoService.bloquearProcesso(processo.getPid());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
 
-            reiniciarProcesso.setOnAction(event -> {
-                Processo processo = row.getItem();
-                if (processo != null) {
-                    try {
-                        ProcessoEstadoService.reiniciarProcesso(processo.getPid());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        reiniciarProcesso.setOnAction(event -> {
+            Processo processo = row.getItem();
+            if (processo != null) {
+                try {
+                    ProcessoEstadoService.reiniciarProcesso(processo.getPid());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
 
-            continuarProcesso.setOnAction(event -> {
-                Processo processo = row.getItem();
-                if (processo != null) {
-                    try {
-                        ProcessoEstadoService.continuarProcesso(processo.getPid());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        continuarProcesso.setOnAction(event -> {
+            Processo processo = row.getItem();
+            if (processo != null) {
+                try {
+                    ProcessoEstadoService.continuarProcesso(processo.getPid());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
 
-            contextMenu.getItems().addAll(
-                    finalizarProcesso,
-                    bloquearProcesso,
-                    reiniciarProcesso,
-                    continuarProcesso,
-                    new SeparatorMenuItem(),
-                    createAlterarPrioridadeMenu(row)
-            );
+        contextMenu.getItems().addAll(
+                finalizarProcesso,
+                bloquearProcesso,
+                reiniciarProcesso,
+                continuarProcesso,
+                new SeparatorMenuItem(),
+                createAlterarPrioridadeMenu(row)
+        );
 
-            row.setContextMenu(contextMenu);
+        row.setContextMenu(contextMenu);
 
-            return row;
+        return row;
     }
 
     public TableRow<Processo> createStyledRow() {
@@ -358,14 +355,13 @@ public class Main extends Application {
                 }
             }
         });
-        
 
         alterarPrioridade.getItems().addAll(
-            prioridadeMuitoBaixa,
-            prioridadeBaixa,
-            prioridadeNormal,
-            prioridadeAlta,
-            prioridadeMuitoAlta
+                prioridadeMuitoBaixa,
+                prioridadeBaixa,
+                prioridadeNormal,
+                prioridadeAlta,
+                prioridadeMuitoAlta
         );
 
         return alterarPrioridade;
