@@ -7,8 +7,7 @@ import gerenciador.util.ComandoExecutor;
 public class ProcessoPrioridadeService {
 
     
-    public void alterarPrioridade(long pid, int novoNice) throws Exception {
-        // Valores válidos no Linux: -20 a 19
+    public static void alterarPrioridade(long pid, int novoNice) throws Exception {
         ComandoExecutor.executar("renice -n " + novoNice + " -p " + pid);
     }
 }

@@ -27,7 +27,7 @@ public class ProcessoConsultaService {
             if (usuarioDesejado.isBlank() || p.getUser().equalsIgnoreCase(usuarioDesejado)) {
                 Processo proc = new Processo();
                 proc.setPid(p.getProcessID()); 
-                proc.setNice(p.getPriority()); 
+                proc.setNice(p.getPriority()-20); 
                 proc.setUser(p.getUser());     
                 proc.setStatus(p.getState().name()); 
                 proc.setCommand(p.getName());

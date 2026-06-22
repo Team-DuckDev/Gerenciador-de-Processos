@@ -1,15 +1,26 @@
 package gerenciador.service;
 
-// Tópico C e D: Executar novo processo [cite: 27]
-//Trocar prioridade ANTES de executar um processo
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProcessoExecucaoService {
 
-    public void executarNovoProcesso(String comando) throws Exception {
-        Runtime.getRuntime().exec(comando);
+    public static void executarNovoProcesso(String comando) throws Exception {
+        ProcessBuilder pb = new ProcessBuilder(comando);
+        pb.start();
     }
 
-    public void executarNovoProcessoComPrioridade(String comando, int nice) throws Exception {
-        String comandoCompleto = "nice -n " + nice + " " + comando;
-        Runtime.getRuntime().exec(comandoCompleto);
+    public static void executarNovoProcessoComPrioridade(String comando, int nice) throws Exception {
+        List<String> comandoCompleto = new ArrayList<>();
+        comandoCompleto.add("nice");
+        comandoCompleto.add("-n");
+        comandoCompleto.add(String.valueOf(nice));
+        
+        for (String arg : comando.split(" ")) {
+            comandoCompleto.add(arg);
+        }
+
+        ProcessBuilder pb = new ProcessBuilder(comandoCompleto);
+        pb.start();
     }
 }
